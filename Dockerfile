@@ -8,7 +8,7 @@ RUN go mod download
 COPY main.go .
 RUN CGO_ENABLED=0 go build -a -o prometheus-am-executor .
 
-FROM scratch
+FROM curlimages/curl
 
-COPY --from=build /opt/app/prometheus-am-executor ./
-ENTRYPOINT [ "./prometheus-am-executor" ]
+COPY --from=build /opt/app/prometheus-am-executor /usr/bin/
+ENTRYPOINT [ "prometheus-am-executor" ]
